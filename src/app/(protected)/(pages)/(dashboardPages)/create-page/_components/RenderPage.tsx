@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import usePromptStore from "@/store/usePromptStore";
 import CreatePage from "./CreatePage/CreatePage";
 import CreativeAI from "./GenerateAI/CreativeAI";
+import ScratchPage from "./Scratch/ScratchPage";
 
 type Props = {};
 
@@ -31,9 +32,9 @@ const RenderPage = (props: Props) => {
       case "create":
         return <CreatePage onSelectOption={handleSelectOption} />;
       case "create-scratch":
-        return <CreativeAI onBack={handleBack} />;
+        return <ScratchPage onBack={handleBack} />;
       case "creative-ai":
-        return <></>;
+        return <CreativeAI onBack={handleBack} />;
       default:
         return null;
     }
