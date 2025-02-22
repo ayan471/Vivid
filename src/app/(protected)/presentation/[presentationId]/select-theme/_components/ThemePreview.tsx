@@ -7,6 +7,9 @@ import { useAnimation } from "framer-motion";
 import { Theme } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import ThemeCard from "./ThemeCard";
+import ThemePicker from "./ThemePicker";
+import { themes } from "@/lib/constants";
 
 type Props = {};
 
@@ -45,7 +48,7 @@ const ThemePreview = (props: Props) => {
           style={{ color: selectedTheme.accentColor }}
         >
           <li>Choose a theme</li>
-          <li>Customize colors and fonts</li>
+          <li>Customise colors and fonts</li>
           <li>Add your content</li>
           <li>Preview and publish</li>
         </ol>
@@ -70,7 +73,7 @@ const ThemePreview = (props: Props) => {
           style={{ backgroundColor: selectedTheme.accentColor + "10" }}
         >
           <p style={{ color: selectedTheme.accentColor }}>
-            This is a smart layout: it acts as a text box.
+            This is a smart layout:it acts as a text box
           </p>
         </div>
         <div
@@ -84,32 +87,23 @@ const ThemePreview = (props: Props) => {
       </div>
       <div className="flex flex-wrap gap-4">
         <Button
-          className="w-full h-12 text-lg font-medium"
-          style={{
-            backgroundColor: selectedTheme.accentColor,
-            color: selectedTheme.accentColor,
-          }}
-        >
-          Primary Button
-        </Button>
-        <Button
           className="h-12 px-6 text-lg font-medium"
           style={{
             backgroundColor: selectedTheme.accentColor,
-            color: selectedTheme.accentColor,
+            color: selectedTheme.fontColor,
           }}
         >
-          Primary Button
+          Primary button
         </Button>
         <Button
           variant={"outline"}
           className="h-12 px-6 text-lg font-medium"
           style={{
-            backgroundColor: selectedTheme.accentColor,
-            color: selectedTheme.accentColor,
+            borderColor: selectedTheme.accentColor,
+            color: selectedTheme.fontColor,
           }}
         >
-          Secondary Button
+          Secondary button
         </Button>
       </div>
     </div>
@@ -141,13 +135,18 @@ const ThemePreview = (props: Props) => {
         className="w-full h-12 text-lg font-medium"
         style={{
           borderColor: selectedTheme.accentColor,
-          color: selectedTheme.fontFamily,
+          color: selectedTheme.fontColor,
         }}
       >
-        Explore Features
+        Explore Feature
       </Button>
     </div>
   );
+  const applyTheme = (theme: Theme) => {
+    setSelectedTheme(theme);
+    setCurrentTheme(theme);
+  };
+
   return (
     <div
       className="h-screen w-full  flex"
@@ -158,7 +157,7 @@ const ThemePreview = (props: Props) => {
       }}
     >
       <div className="flex-grow overflow-y-auto">
-        <div className="p-12 flex flex-col items-center max-h-screen">
+        <div className="p-12 flex flex-col items-center min-h-screen">
           <Button
             variant={"outline"}
             className="mb-12 self-start"
@@ -174,10 +173,38 @@ const ThemePreview = (props: Props) => {
             Back
           </Button>
           <div className="w-full flex justify-center items-center relative flex-grow">
-            <ThemeCard />
+            <ThemeCard
+              tittle="Quick Start"
+              description="Get up and running in no time"
+              content={leftCardContent}
+              variant="left"
+              theme={selectedTheme}
+              controls={controls}
+            />
+            <ThemeCard
+              tittle="Main Preview"
+              description="This is the main theme preview  card"
+              content={mainCardContent}
+              variant="main"
+              theme={selectedTheme}
+              controls={controls}
+            />
+            <ThemeCard
+              tittle="Theme Features"
+              description="Discover what our themes can do"
+              content={rightCardContent}
+              variant="right"
+              theme={selectedTheme}
+              controls={controls}
+            />
           </div>
         </div>
       </div>
+      <ThemePicker
+        selectedTheme={selectedTheme}
+        themes={themes}
+        onThemeSelect={applyTheme}
+      />
     </div>
   );
 };
