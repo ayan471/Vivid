@@ -2,10 +2,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSlideStore } from "@/store/useSlideStore";
 import React, { useEffect, useState } from "react";
+import DragabbleSlidePreview from "./DragabbleSlidePreview";
 
-type Props = {};
-
-const LayoutPreview = (props: Props) => {
+const LayoutPreview = () => {
   const { getOrderedSlides, reorderSlides } = useSlideStore();
   const slides = getOrderedSlides();
   const [loading, setLoading] = useState(true);
@@ -14,8 +13,14 @@ const LayoutPreview = (props: Props) => {
     if (typeof window !== "undefined") setLoading(false);
   }, []);
 
+  const moveSlide = (draIndex: number, hoverIndex: number) => {
+    {
+      reorderSlides(draIndex, hoverIndex);
+    }
+  };
+
   return (
-    <div className="w-64  h-full fixed left-0 top-20 border-r overflow-y-auto">
+    <div className="w-72  h-full fixed left-0 top-20 border-r overflow-y-auto">
       <ScrollArea className="h-full w-full" suppressHydrationWarning>
         {loading ? (
           <div className="w-full px-4 flex flex-col space-y-6">
